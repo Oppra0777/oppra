@@ -13,6 +13,10 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     ".test-build/**",
+    // Cloudflare build output. Gitignored, but flat config does not read
+    // .gitignore, so without this the generated worker bundle gets linted.
+    ".open-next/**",
+    ".wrangler/**",
   ]),
 ]);
 
