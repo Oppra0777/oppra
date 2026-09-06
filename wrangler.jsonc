@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+
+  // Must match the Worker name in Cloudflare Workers Builds. The generator
+  // defaults this to the package.json name ("oppra-web"), which is NOT the
+  // Worker this project deploys to — that mismatch made the self-reference
+  // binding below point at a Worker that does not exist, and the deploy failed
+  // with "Service binding 'WORKER_SELF_REFERENCE' references Worker 'oppra-web'
+  // which was not found".
+  "name": "oppra",
+
+  "compatibility_date": "2026-09-06",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      // Self-reference service binding; the service name must match the worker
+      // name above. See https://opennext.js.org/cloudflare/caching
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "oppra"
+    }
+  ],
+  "images": {
+    // Enable image optimization for next/image.
+    // See https://opennext.js.org/cloudflare/howtos/image
+    "binding": "IMAGES"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

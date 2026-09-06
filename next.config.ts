@@ -17,3 +17,9 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Makes Cloudflare bindings available to `next dev`. Harmless in production
+// builds; caught so a failed import cannot become an unhandled rejection.
+import("@opennextjs/cloudflare")
+  .then((m) => m.initOpenNextCloudflareForDev())
+  .catch(() => {});
