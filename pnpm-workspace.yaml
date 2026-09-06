@@ -1,3 +1,9 @@
+# Build scripts pnpm is allowed to run. esbuild and workerd both need theirs:
+# workerd's postinstall places the platform-specific Workers runtime binary, and
+# the Cloudflare adapter bundles with esbuild. Leaving these unset made pnpm skip
+# them, which is what broke `wrangler deploy` in CI.
 allowBuilds:
+  esbuild: true
   sharp: false
   unrs-resolver: false
+  workerd: true
