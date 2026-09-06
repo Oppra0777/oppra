@@ -24,6 +24,22 @@
  */
 import { spawnSync } from "node:child_process";
 
+const REENTRY_FLAG = "OPPRA_CF_BUNDLING";
+
+/*
+  Recursion guard. OpenNext shells out to a build command to produce the
+  standalone Next output, and if that command is ever this package's `build`
+  script again, the two call each other forever — a hang, not an error, which
+  burns CI minutes and looks like a slow build.
+
+  open-next.config.ts sets `buildCommand: "next build"` so this should never
+  trigger. It stays as a cheap backstop in case that config is lost.
+*/
+if (process.env[REENTRY_FLAG]) {
+  console.log("cf-postbuild: already inside the Cloudflare bundle; not recursing.");
+  process.exit(0);
+}
+
 if (process.platform === "win32") {
   console.log(
     "\ncf-postbuild: skipping the Cloudflare Worker bundle on Windows.\n" +
@@ -38,7 +54,11 @@ console.log("\ncf-postbuild: bundling the Cloudflare Worker into .open-next/ ...
 const result = spawnSync(
   "opennextjs-cloudflare",
   ["build"],
-  { stdio: "inherit", shell: true }
+  {
+    stdio: "inherit",
+    shell: true,
+    env: { ...process.env, [REENTRY_FLAG]: "1" },
+  }
 );
 
 if (result.error) {
