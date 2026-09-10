@@ -1,7 +1,7 @@
 import Image from "next/image";
-import planImage from "../public/1.png";
-import offlineImage from "../public/2.png";
-import reportImage from "../public/3.png";
+import planImage from "../public/Frame 1000003270.png";
+import offlineImage from "../public/Frame 1000003277.png";
+import reportImage from "../public/Frame 15.png";
 import splashScreen from "../public/splash.png";
 import tasksScreen from "../public/Task.png";
 import brandArt from "../public/oppra-splash-blue-1080x1920-2 (1) 1.png";
