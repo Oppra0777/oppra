@@ -38,7 +38,7 @@ test("normalizes name and email while accepting omitted optional fields", () => 
 });
 
 test("rejects missing fields, malformed email, and invalid industry", () => {
-  for (const input of [null, [], {}, { ...valid, email: "ada@invalid", industry: "", fullName: " " }]) {
+  for (const input of [null, [], {}, { ...valid, email: "ada@invalid", industry: "Unknown industry", fullName: " " }]) {
     const result = validateWaitlist(input);
     assert.equal(result.success, false);
     if (!result.success) assert.deepEqual(Object.keys(result.errors), ["fullName", "email", "industry"]);

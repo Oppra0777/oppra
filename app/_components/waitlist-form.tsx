@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { validateWaitlist, type WaitlistErrors } from "../_lib/waitlist";
+import { INDUSTRIES, validateWaitlist, type WaitlistErrors } from "../_lib/waitlist";
 import { Icon } from "./icon";
 
 type SubmissionState =
@@ -98,7 +98,10 @@ export function WaitlistForm() {
         </div>
         <div className="form-field">
           <label htmlFor="industry">Industry</label>
-          <input id="industry" name="industry" placeholder="e.g. Construction" required minLength={2} maxLength={100} disabled={submitting} aria-invalid={Boolean(errors.industry)} aria-describedby={errors.industry ? "industry-error" : undefined} />
+          <select id="industry" name="industry" defaultValue="" required disabled={submitting} aria-invalid={Boolean(errors.industry)} aria-describedby={errors.industry ? "industry-error" : undefined}>
+            <option value="" disabled>Select your industry</option>
+            {INDUSTRIES.map((industry) => <option key={industry} value={industry}>{industry}</option>)}
+          </select>
           {errors.industry && <p id="industry-error" className="field-error">{errors.industry}</p>}
         </div>
       </div>

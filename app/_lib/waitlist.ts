@@ -1,3 +1,23 @@
+export const INDUSTRIES = [
+  "Agriculture",
+  "Construction",
+  "Education",
+  "Energy and Utilities",
+  "Financial Services",
+  "Government and Public Sector",
+  "Healthcare",
+  "Hospitality",
+  "Logistics and Transportation",
+  "Manufacturing",
+  "Nonprofit and NGO",
+  "Professional Services",
+  "Real Estate",
+  "Retail and E-commerce",
+  "Technology",
+  "Telecommunications",
+  "Other",
+] as const;
+
 export type WaitlistDetails = {
   fullName: string;
   email: string;
@@ -36,8 +56,8 @@ export function validateWaitlist(input: unknown): ValidationResult {
   if (data.phone && (data.phone.length > 30 || !/^\+?[0-9\s().-]+$/.test(data.phone) || data.phone.replace(/\D/g, "").length < 7 || data.phone.replace(/\D/g, "").length > 15)) {
     errors.phone = "Please enter a valid phone number, including your country code.";
   }
-  if (data.industry.length < 2 || data.industry.length > 100) {
-    errors.industry = "Please enter your industry (2–100 characters).";
+  if (!INDUSTRIES.some((industry) => industry === data.industry)) {
+    errors.industry = "Please select your industry.";
   }
   if (data.useCase.length > 1000) {
     errors.useCase = "Please keep your answer to 1,000 characters or fewer.";

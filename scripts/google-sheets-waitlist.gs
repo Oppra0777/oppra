@@ -20,6 +20,13 @@ function doPost(event) {
     if (!data || data.secret !== secret) return json({ success: false });
 
     const limits = { fullName: 100, email: 254, phone: 30, industry: 100, useCase: 1000 };
+    const industries = [
+      "Agriculture", "Construction", "Education", "Energy and Utilities",
+      "Financial Services", "Government and Public Sector", "Healthcare",
+      "Hospitality", "Logistics and Transportation", "Manufacturing",
+      "Nonprofit and NGO", "Professional Services", "Real Estate",
+      "Retail and E-commerce", "Technology", "Telecommunications", "Other",
+    ];
     for (const field of Object.keys(limits)) {
       if (typeof data[field] !== "string" || data[field].length > limits[field]) {
         return json({ success: false });
@@ -27,7 +34,7 @@ function doPost(event) {
       data[field] = data[field].trim();
     }
     data.email = data.email.toLowerCase();
-    if (data.fullName.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.industry.length < 2) {
+    if (data.fullName.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || !industries.includes(data.industry)) {
       return json({ success: false });
     }
     if (data.phone && (!/^\+?[0-9\s().-]+$/.test(data.phone) || data.phone.replace(/\D/g, "").length < 7 || data.phone.replace(/\D/g, "").length > 15)) {

@@ -154,7 +154,7 @@ export default function Home() {
               <div className="waitlist-brand-art"><Image src={brandArt} alt="" sizes="135px" /><span>Your team. One loop.<br /><strong>And you&apos;re part of it.</strong></span></div>
               <span className="story-orbit" aria-hidden="true" />
             </div>
-            <div className="waitlist-form-panel"><span className="form-kicker">BUILT FOR TEAMS ACROSS NIGERIA FIRST</span><h2 id="waitlist-title">Join the Oppra Waitlist</h2><p className="form-intro">A few details now. A better way to work soon.</p><WaitlistForm /></div>
+            <div className="waitlist-form-panel"><span className="form-kicker">Built for Teams across Nigeria First</span><h2 id="waitlist-title">Join the Oppra Waitlist</h2><p className="form-intro">A few details now. A better way to work soon.</p><WaitlistForm /></div>
           </div>
         </section>
 
