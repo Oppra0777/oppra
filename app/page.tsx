@@ -148,13 +148,13 @@ export default function Home() {
           <div className="container waitlist-grid">
             <div className="waitlist-story">
               <span className="eyebrow"><span className="status-dot" /> THE NEXT CHAPTER STARTS WITH YOU</span>
-              <h2>Good things<br />are coming.<br /><span>Get in the loop.</span></h2>
+              <h2>Built for Teams<br />across Nigeria<br /><span>First</span></h2>
               <p>We&apos;re building a simpler way for teams to work together. Be among the first to experience Oppra.</p>
               <ul className="waitlist-perks"><li><Icon name="check" /> Hear about launch first</li><li><Icon name="check" /> Get updates on early access</li><li><Icon name="check" /> Help shape what comes next</li></ul>
               <div className="waitlist-brand-art"><Image src={brandArt} alt="" sizes="135px" /><span>Your team. One loop.<br /><strong>And you&apos;re part of it.</strong></span></div>
               <span className="story-orbit" aria-hidden="true" />
             </div>
-            <div className="waitlist-form-panel"><span className="form-kicker">Built for Teams across Nigeria First</span><h2 id="waitlist-title">Join the Oppra Waitlist</h2><p className="form-intro">A few details now. A better way to work soon.</p><WaitlistForm /></div>
+            <div className="waitlist-form-panel"><span className="form-kicker">YOUR NEXT CHAPTER</span><h2 id="waitlist-title">Join the Oppra Waitlist</h2><p className="form-intro">A few details now. A better way to work soon.</p><WaitlistForm /></div>
           </div>
         </section>
 
