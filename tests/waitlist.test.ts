@@ -6,7 +6,7 @@ import { POST } from "../app/api/waitlist/route";
 import { validateWaitlist } from "../app/_lib/waitlist";
 import { saveWaitlistEntry } from "../app/_lib/waitlist-service";
 
-const valid = { fullName: "Ada Okafor", email: "ada@example.com", phone: "", country: "NG", useCase: "" };
+const valid = { fullName: "Ada Okafor", email: "ada@example.com", phone: "", industry: "Construction", useCase: "" };
 const originalFetch = globalThis.fetch;
 const originalUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
 const originalSecret = process.env.GOOGLE_SHEETS_WEBHOOK_SECRET;
@@ -32,16 +32,16 @@ function request(body: unknown, headers: Record<string, string> = {}) {
 }
 
 test("normalizes name and email while accepting omitted optional fields", () => {
-  const result = validateWaitlist({ fullName: "  Ada Okafor ", email: " ADA@EXAMPLE.COM ", country: "NG" });
+  const result = validateWaitlist({ fullName: "  Ada Okafor ", email: " ADA@EXAMPLE.COM ", industry: " Construction " });
   assert.equal(result.success, true);
   if (result.success) assert.deepEqual(result.data, valid);
 });
 
-test("rejects missing fields, malformed email, and invalid country", () => {
-  for (const input of [null, [], {}, { ...valid, email: "ada@invalid", country: "invalid", fullName: " " }]) {
+test("rejects missing fields, malformed email, and invalid industry", () => {
+  for (const input of [null, [], {}, { ...valid, email: "ada@invalid", industry: "", fullName: " " }]) {
     const result = validateWaitlist(input);
     assert.equal(result.success, false);
-    if (!result.success) assert.deepEqual(Object.keys(result.errors), ["fullName", "email", "country"]);
+    if (!result.success) assert.deepEqual(Object.keys(result.errors), ["fullName", "email", "industry"]);
   }
 });
 
@@ -68,7 +68,7 @@ test("rejects oversized bodies with and without a content-length header", async 
 });
 
 test("rejects invalid inputs and honeypot submissions", async () => {
-  assert.equal((await POST(request({ ...valid, country: "" }))).status, 400);
+  assert.equal((await POST(request({ ...valid, industry: "" }))).status, 400);
   assert.equal((await POST(request({ ...valid, website: "spam" }))).status, 400);
 });
 
@@ -97,7 +97,7 @@ test("forwards normalized data and private secret; returns only a confirmation",
     assert.equal(options?.redirect, "follow");
     assert.equal(options?.cache, "no-store");
     const body = JSON.parse(String(options?.body));
-    assert.deepEqual(body, { ...valid, country: "Nigeria", secret: "test-only-secret" });
+    assert.deepEqual(body, { ...valid, secret: "test-only-secret" });
     return Response.json({ success: true });
   };
   const response = await POST(request({ ...valid, email: " ADA@EXAMPLE.COM ", website: "" }, { origin: "https://oppra.example" }));
@@ -176,11 +176,11 @@ test("Apps Script rejects unauthorized requests without creating rows", () => {
 
 test("Apps Script creates headers, saves a signup, and avoids duplicate rows", () => {
   const script = scriptHarness();
-  const details = { ...valid, country: "Nigeria", secret: "test-only-secret" };
+  const details = { ...valid, secret: "test-only-secret" };
   assert.equal(script.submit(details).success, true);
   assert.equal(script.rows.length, 2);
   assert.equal(script.rows[1][2], "ada@example.com");
-  assert.equal(script.rows[1][4], "Nigeria");
+  assert.equal(script.rows[1][4], "Construction");
   assert.equal(script.submit({ ...details, email: "ADA@EXAMPLE.COM" }).success, true);
   assert.equal(script.rows.length, 2);
   assert.equal(script.released(), 2);
@@ -188,7 +188,7 @@ test("Apps Script creates headers, saves a signup, and avoids duplicate rows", (
 
 test("Apps Script stores formula-like content as text and preserves international phone numbers", () => {
   const script = scriptHarness();
-  assert.equal(script.submit({ ...valid, country: "Nigeria", secret: "test-only-secret", fullName: "=1+1", phone: "+2348001234567", useCase: "@SUM(1,2)" }).success, true);
+  assert.equal(script.submit({ ...valid, secret: "test-only-secret", fullName: "=1+1", phone: "+2348001234567", useCase: "@SUM(1,2)" }).success, true);
   assert.equal(script.rows[1][1], "'=1+1");
   assert.equal(script.rows[1][3], "'+2348001234567");
   assert.equal(script.rows[1][5], "'@SUM(1,2)");

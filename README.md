@@ -26,7 +26,7 @@ The flow is **landing page → /api/waitlist → Google Apps Script → Google S
    GOOGLE_SHEETS_WEBHOOK_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
    GOOGLE_SHEETS_WEBHOOK_SECRET=the-same-secret-from-step-4
    ```
-7. Restart `pnpm dev`. Submit a test entry through the form. The script creates a **Waitlist** tab with timestamp, name, email, phone, country, and use-case columns. Confirm that the row is present.
+7. Restart `pnpm dev`. Submit a test entry through the form. The script creates a **Waitlist** tab with timestamp, name, email, phone, industry, and use-case columns. Confirm that the row is present.
 8. Add these same two environment variables to your hosting provider and redeploy when publishing.
 
 Deploying the Apps Script endpoint for **Anyone** does not make the spreadsheet public. Requests must also contain the private shared secret. Do not put the secret in a `NEXT_PUBLIC_` variable, source control, or a chat message.
@@ -37,7 +37,7 @@ Google documents [web app deployments](https://developers.google.com/apps-script
 
 ## Submission behavior
 
-- Required: full name, email address, and country. Phone number and intended use are optional.
+- Required: full name, email address, and industry. Phone number and intended use are optional.
 - Input is validated on the client and server; no visitor details are logged.
 - A hidden honeypot rejects simple automated submissions. Cross-origin browser submissions are rejected.
 - Duplicate email addresses are accepted without creating another row. Retries preserve the original entry; submitting again does not overwrite it.

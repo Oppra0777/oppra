@@ -69,6 +69,7 @@ button, a, input, select, textarea, summary { -webkit-tap-highlight-color: trans
 .status-dot { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: #3269dc; box-shadow: 0 0 0 3px #3269dc15; flex-shrink: 0; }
 h1 { font-size: clamp(60px, 5.8vw, 80px); line-height: 1.08; font-weight: 650; letter-spacing: -4.7px; margin: 24px 0 28px; position: relative; width: fit-content; padding-bottom: 12px; }
 h1 > .hero-highlight { color: var(--brand); }
+.hero-highlight { font-size: .62em; letter-spacing: 0; }
 .hero-line { display: block; overflow: hidden; }
 .hero-line > span { display: block; }
 .headline-loop { position: absolute; width: 100%; height: 20px; left: 0; bottom: -3px; color: #abcafa; }
@@ -365,37 +366,6 @@ details[open] .faq-toggle .icon { transform: rotate(45deg); }
    --------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    /*
-       Length-based ranges rather than percentages: a percentage of the entry
-       range scales with the element's own height, so a tall section would
-       finish revealing long after it had been read. A fixed scroll distance
-       gives every element the same, predictable reveal.
-    */
-    .section-heading,
-    .video-frame,
-    .feature-card,
-    .how-grid > div,
-    .steps > li,
-    .waitlist-grid,
-    .faq-grid > div,
-    .audience-strip > div > span,
-    .footer-top > * {
-      animation: reveal-up linear both;
-      animation-timeline: view();
-      animation-range: entry 30px entry 260px;
-    }
-
-    /* Stagger sideways neighbours by pushing each one further into the range. */
-    .feature-card:nth-child(2) { animation-range: entry 70px entry 300px; }
-    .feature-card:nth-child(3) { animation-range: entry 110px entry 340px; }
-    .audience-strip > div > span:nth-child(2) { animation-range: entry 55px entry 285px; }
-    .audience-strip > div > span:nth-child(3) { animation-range: entry 80px entry 310px; }
-    .audience-strip > div > span:nth-child(4) { animation-range: entry 105px entry 335px; }
-    .steps > li:nth-child(2) { animation-range: entry 60px entry 290px; }
-    .steps > li:nth-child(3) { animation-range: entry 90px entry 320px; }
-    .footer-top > :nth-child(2) { animation-range: entry 60px entry 290px; }
-    .footer-top > :nth-child(3) { animation-range: entry 90px entry 320px; }
-
     /* Reading progress across the bottom edge of the sticky header. */
     .site-header::after {
       content: "";
@@ -425,19 +395,13 @@ details[open] .faq-toggle .icon { transform: rotate(45deg); }
 
     .story-orbit { animation: story-drift linear both; animation-timeline: view(); }
 
-    /* The frame already reveals on entry; this second animation runs on its own
-       view timeline for a slow parallax across the whole pass. */
+    /* Slow parallax across the frame's full pass through the viewport. */
     .video-frame {
-      animation: reveal-up linear both, frame-drift linear both;
-      animation-timeline: view(), view();
-      animation-range: entry 30px entry 260px, cover 0% cover 100%;
+      animation: frame-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
     }
   }
-}
-
-@keyframes reveal-up {
-  from { opacity: 0; translate: 0 28px; scale: .985; }
-  to { opacity: 1; translate: 0 0; scale: 1; }
 }
 @keyframes progress-grow { to { scale: 1 1; } }
 @keyframes hero-drift { to { translate: 0 -48px; } }

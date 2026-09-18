@@ -6,19 +6,15 @@ const REVEAL_TARGETS = [
   ".section-heading",
   ".video-frame",
   ".feature-card",
-  ".how-grid > div",
-  ".steps > li",
   ".waitlist-grid",
   ".faq-grid > div",
+  ".audience-strip > div > span",
+  ".footer-top > *",
 ].join(", ");
 
 export function ScrollReveal() {
   useEffect(() => {
     if (!("IntersectionObserver" in window) || !("animate" in Element.prototype)) return;
-    // Browsers with scroll-driven animations get the reveals from CSS, off the
-    // main thread. This observer is only the fallback for the ones that do not.
-    if (window.CSS?.supports?.("animation-timeline: view()")) return;
-
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const animations = new Set<Animation>();
     const revealed = new WeakSet<Element>();

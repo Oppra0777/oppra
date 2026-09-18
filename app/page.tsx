@@ -14,7 +14,6 @@ import { HeroMotion } from "./_components/hero-motion";
 import { MobileNav } from "./_components/mobile-nav";
 import { WaitlistVideo } from "./_components/waitlist-video";
 import { FaqItem } from "./_components/faq-item";
-import { getCountries } from "./_lib/waitlist";
 
 const features = [
   {
@@ -76,7 +75,6 @@ export default function Home() {
           <a href="#" aria-label="Oppra home"><Brand /></a>
           <nav aria-label="Main navigation">
             <a href="#why-oppra">Why Oppra</a>
-            <a href="#how-it-works">How it works</a>
             <a href="#faqs">FAQs</a>
           </nav>
           <a href="#waitlist" className="button button-small">Join the waitlist <Icon name="arrow" /></a>
@@ -90,12 +88,12 @@ export default function Home() {
             <div className="hero-copy">
               <span className="announcement"><span className="status-dot" /> A better way to work is coming</span>
               <h1 id="hero-title">
-                <span className="hero-line"><span>Your team.</span></span>
-                <span className="hero-line"><span>Your work.</span></span>
-                <span className="hero-line hero-highlight"><span>One loop.</span></span>
+                <span className="hero-line"><span>Your team,</span></span>
+                <span className="hero-line"><span>Your work,</span></span>
+                <span className="hero-line hero-highlight"><span>Even when offline...</span></span>
                 <svg className="headline-loop" viewBox="0 0 340 22" fill="none" aria-hidden="true"><path d="M5 16C80 2 224 0 330 11M46 20c78-9 176-10 248-6" stroke="currentColor" strokeWidth="4" strokeLinecap="round" /></svg>
               </h1>
-              <p className="hero-description">Great work happens when everyone is connected. Bring your tasks, teams, and reports together — wherever work takes you.</p>
+              <p className="hero-description">Oppra brings your tasks, people, updates and reports together — whether your team is in the office, on site or out in the field.</p>
               <div className="hero-actions">
                 <a className="button" href="#waitlist">Get early access <Icon name="arrow" /></a>
                 <a className="text-link" href="#meet-oppra">Meet Oppra <span className="play-icon"><Icon name="play" /></span></a>
@@ -116,7 +114,7 @@ export default function Home() {
             </HeroMotion>
           </div>
           <div className="container audience-strip">
-            <p>BUILT FOR TEAMS THAT MAKE THINGS HAPPEN</p>
+            <p>BUILT FOR NIGERIA FIRST</p>
             <div><span><Icon name="location" /> Field teams</span><span><Icon name="business" /> Growing businesses</span><span><Icon name="heart" /> Nonprofits</span><span><Icon name="team" /> Project teams</span></div>
           </div>
         </section>
@@ -146,17 +144,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="how-it-works" className="how-section section-space" aria-labelledby="how-title">
-          <div className="container how-grid">
-            <div><span className="eyebrow">A LITTLE LESS BUSYWORK</span><h2 id="how-title">More room for<br />the work that matters.</h2><p className="section-description">One connected workflow. From making a plan to making an impact.</p><a href="#waitlist" className="text-link blue-link">Be part of what&apos;s next <Icon name="arrow" /></a></div>
-            <ol className="steps">
-              <li><span className="step-number">01</span><div><h3>Bring your people together</h3><p>Give your team a shared space to connect, coordinate, and know what&apos;s next.</p></div><Icon name="team" /></li>
-              <li><span className="step-number">02</span><div><h3>Turn plans into progress</h3><p>Assign tasks, keep track of the details, and get work done — even offline.</p></div><Icon name="tasks" /></li>
-              <li><span className="step-number">03</span><div><h3>Keep everyone in the loop</h3><p>Share updates and clear reports, so good work never gets lost in the noise.</p></div><Icon name="report" /></li>
-            </ol>
-          </div>
-        </section>
-
         <section id="waitlist" className="waitlist-section section-space" aria-labelledby="waitlist-title">
           <div className="container waitlist-grid">
             <div className="waitlist-story">
@@ -167,7 +154,7 @@ export default function Home() {
               <div className="waitlist-brand-art"><Image src={brandArt} alt="" sizes="135px" /><span>Your team. One loop.<br /><strong>And you&apos;re part of it.</strong></span></div>
               <span className="story-orbit" aria-hidden="true" />
             </div>
-            <div className="waitlist-form-panel"><span className="form-kicker">YOUR NEXT CHAPTER</span><h2 id="waitlist-title">Join the Oppra Waitlist</h2><p className="form-intro">A few details now. A better way to work soon.</p><WaitlistForm countries={getCountries()} /></div>
+            <div className="waitlist-form-panel"><span className="form-kicker">BUILT FOR TEAMS ACROSS NIGERIA FIRST</span><h2 id="waitlist-title">Join the Oppra Waitlist</h2><p className="form-intro">A few details now. A better way to work soon.</p><WaitlistForm /></div>
           </div>
         </section>
 

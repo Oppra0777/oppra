@@ -19,7 +19,7 @@ function doPost(event) {
     const data = JSON.parse(event.postData.contents);
     if (!data || data.secret !== secret) return json({ success: false });
 
-    const limits = { fullName: 100, email: 254, phone: 30, country: 100, useCase: 1000 };
+    const limits = { fullName: 100, email: 254, phone: 30, industry: 100, useCase: 1000 };
     for (const field of Object.keys(limits)) {
       if (typeof data[field] !== "string" || data[field].length > limits[field]) {
         return json({ success: false });
@@ -27,7 +27,7 @@ function doPost(event) {
       data[field] = data[field].trim();
     }
     data.email = data.email.toLowerCase();
-    if (data.fullName.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || !data.country) {
+    if (data.fullName.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.industry.length < 2) {
       return json({ success: false });
     }
     if (data.phone && (!/^\+?[0-9\s().-]+$/.test(data.phone) || data.phone.replace(/\D/g, "").length < 7 || data.phone.replace(/\D/g, "").length > 15)) {
@@ -41,7 +41,7 @@ function doPost(event) {
     const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
     const sheet = spreadsheet.getSheetByName("Waitlist") || spreadsheet.insertSheet("Waitlist");
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Joined at (UTC)", "Full Name", "Email Address", "Phone Number", "Country", "What would you use Oppra for?"]);
+      sheet.appendRow(["Joined at (UTC)", "Full Name", "Email Address", "Phone Number", "Industry", "What do you want to use Oppra for?"]);
       sheet.setFrozenRows(1);
       sheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#eaf0ff");
     }
@@ -64,7 +64,7 @@ function doPost(event) {
       safeCell(data.fullName),
       safeCell(data.email),
       safeCell(data.phone),
-      safeCell(data.country),
+      safeCell(data.industry),
       safeCell(data.useCase),
     ]);
     SpreadsheetApp.flush();

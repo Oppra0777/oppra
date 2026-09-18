@@ -1,4 +1,4 @@
-import { getCountries, type WaitlistDetails } from "./waitlist";
+import type { WaitlistDetails } from "./waitlist";
 
 type SaveResult = { success: true } | { success: false; status: 502 | 503 };
 
@@ -24,7 +24,6 @@ export async function saveWaitlistEntry(details: WaitlistDetails): Promise<SaveR
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...details,
-        country: getCountries().find((country) => country.code === details.country)?.name ?? details.country,
         secret,
       }),
       redirect: "follow",

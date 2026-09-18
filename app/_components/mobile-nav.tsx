@@ -5,7 +5,6 @@ import { Icon } from "./icon";
 
 const LINKS = [
   { href: "#why-oppra", label: "Why Oppra" },
-  { href: "#how-it-works", label: "How it works" },
   { href: "#faqs", label: "FAQs" },
 ];
 

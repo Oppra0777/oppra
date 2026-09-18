@@ -9,7 +9,7 @@ type SubmissionState =
   | { status: "error"; message: string }
   | { status: "success"; email: string };
 
-export function WaitlistForm({ countries }: { countries: { code: string; name: string }[] }) {
+export function WaitlistForm() {
   const [state, setState] = useState<SubmissionState>({ status: "idle" });
   const [errors, setErrors] = useState<WaitlistErrors>({});
   const successRef = useRef<HTMLDivElement>(null);
@@ -97,16 +97,13 @@ export function WaitlistForm({ countries }: { countries: { code: string; name: s
           {errors.phone && <p id="phone-error" className="field-error">{errors.phone}</p>}
         </div>
         <div className="form-field">
-          <label htmlFor="country">Country</label>
-          <select id="country" name="country" autoComplete="country" defaultValue="" required disabled={submitting} aria-invalid={Boolean(errors.country)} aria-describedby={errors.country ? "country-error" : undefined}>
-            <option value="" disabled>Select your country</option>
-            {countries.map(({ code, name }) => <option key={code} value={code}>{name}</option>)}
-          </select>
-          {errors.country && <p id="country-error" className="field-error">{errors.country}</p>}
+          <label htmlFor="industry">Industry</label>
+          <input id="industry" name="industry" placeholder="e.g. Construction" required minLength={2} maxLength={100} disabled={submitting} aria-invalid={Boolean(errors.industry)} aria-describedby={errors.industry ? "industry-error" : undefined} />
+          {errors.industry && <p id="industry-error" className="field-error">{errors.industry}</p>}
         </div>
       </div>
       <div className="form-field">
-        <label htmlFor="useCase">What would you use Oppra for? <span>(optional)</span></label>
+        <label htmlFor="useCase">What do you want to use Oppra for? <span>(optional)</span></label>
         <textarea id="useCase" name="useCase" placeholder="Tell us a little about your team or your work..." rows={3} maxLength={1000} disabled={submitting} aria-invalid={Boolean(errors.useCase)} aria-describedby={errors.useCase ? "useCase-error" : undefined} />
         {errors.useCase && <p id="useCase-error" className="field-error">{errors.useCase}</p>}
       </div>
