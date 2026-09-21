@@ -69,7 +69,12 @@ export function WaitlistForm() {
   if (state.status === "success") {
     return (
       <div className="form-success" ref={successRef} tabIndex={-1} role="status">
-        <span className="success-icon"><Icon name="check" /></span>
+        <div className="success-mark">
+          <div className="success-celebration" aria-hidden="true">
+            {Array.from({ length: 14 }, (_, index) => <span key={index} />)}
+          </div>
+          <span className="success-icon"><Icon name="check" /></span>
+        </div>
         <h3>You&apos;re in the loop!</h3>
         <p>You&apos;re on the Oppra waitlist. We&apos;ll send launch and early-access updates to <strong>{state.email}</strong>.</p>
         <button className="text-link" onClick={() => setState({ status: "idle" })}>Add another person <Icon name="arrow" /></button>
