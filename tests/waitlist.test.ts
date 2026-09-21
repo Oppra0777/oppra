@@ -157,16 +157,27 @@ function scriptHarness() {
     }) },
     SpreadsheetApp: { openById: () => ({ getSheetByName: () => rows.length ? sheet : null, insertSheet: () => sheet }), flush: () => undefined },
   };
-  const doPost = runInNewContext(
-    readFileSync("scripts/google-sheets-waitlist.gs", "utf8") + "\ndoPost;",
+  const handlers = runInNewContext(
+    readFileSync("scripts/google-sheets-waitlist.gs", "utf8") + "\n({ doGet, doPost });",
     context,
-  ) as (event: { postData: { contents: string } }) => { success: boolean };
+  ) as {
+    doGet: () => { success: boolean; message: string };
+    doPost: (event: { postData: { contents: string } }) => { success: boolean };
+  };
   return {
     rows,
     released: () => released,
-    submit: (details: Record<string, unknown>) => doPost({ postData: { contents: JSON.stringify(details) } }),
+    health: () => handlers.doGet(),
+    submit: (details: Record<string, unknown>) => handlers.doPost({ postData: { contents: JSON.stringify(details) } }),
   };
 }
+
+test("Apps Script GET endpoint reports that the webhook is ready", () => {
+  assert.deepEqual(scriptHarness().health(), {
+    success: true,
+    message: "Oppra waitlist webhook is ready. Submit entries with POST.",
+  });
+});
 
 test("Apps Script rejects unauthorized requests without creating rows", () => {
   const script = scriptHarness();

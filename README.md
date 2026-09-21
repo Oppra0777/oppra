@@ -20,7 +20,7 @@ The flow is **landing page → /api/waitlist → Google Apps Script → Google S
 4. Open **Project Settings → Script properties** and add:
    - `SPREADSHEET_ID`: the part of the Sheet URL between `/d/` and `/edit`.
    - `WEBHOOK_SECRET`: a long random secret. Generate one locally with `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`. Keep it private.
-5. Select **Deploy → New deployment → Web app**. Set **Execute as: Me** and **Who has access: Anyone**. Authorize your script, then copy the Web app URL ending in `/exec`. If your Workspace account does not allow public web apps, your administrator must enable this deployment option.
+5. Select **Deploy → New deployment → Web app**. Set **Execute as: Me** and **Who has access: Anyone**. Authorize your script, then copy the Web app URL ending in `/exec`. Opening that URL should return a JSON message confirming the webhook is ready. If your Workspace account does not allow public web apps, your administrator must enable this deployment option.
 6. Copy `.env.example` to `.env.local` and set:
    ```dotenv
    GOOGLE_SHEETS_WEBHOOK_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
@@ -31,7 +31,7 @@ The flow is **landing page → /api/waitlist → Google Apps Script → Google S
 
 Deploying the Apps Script endpoint for **Anyone** does not make the spreadsheet public. Requests must also contain the private shared secret. Do not put the secret in a `NEXT_PUBLIC_` variable, source control, or a chat message.
 
-After changing Apps Script code, use **Deploy → Manage deployments → Edit → New version → Deploy** so the existing URL serves the updated code. The editor's Run button does not supply the HTTP event required by `doPost`; test through the website.
+After changing Apps Script code, use **Deploy → Manage deployments → Edit → New version → Deploy** so the existing `/exec` URL serves the updated code. The `/dev` URL shown under **Test deployments** only runs the latest saved code for an authorized editor; do not use it in `GOOGLE_SHEETS_WEBHOOK_URL`. The editor's Run button does not supply the HTTP event required by `doPost`; test submissions through the website.
 
 Google documents [web app deployments](https://developers.google.com/apps-script/guides/web) and [Content Service redirects](https://developers.google.com/apps-script/guides/content). The server follows Google's redirect and waits for an explicit successful JSON response before displaying confirmation.
 

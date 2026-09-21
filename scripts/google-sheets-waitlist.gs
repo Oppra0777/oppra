@@ -3,6 +3,15 @@
  * Set SPREADSHEET_ID and WEBHOOK_SECRET in Project Settings > Script properties.
  * Deploy as a Web app: execute as yourself; access: Anyone.
  */
+function doGet() {
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      success: true,
+      message: "Oppra waitlist webhook is ready. Submit entries with POST.",
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(event) {
   const json = (value) => ContentService
     .createTextOutput(JSON.stringify(value))
