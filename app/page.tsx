@@ -1,10 +1,10 @@
 import Image from "next/image";
-import planImage from "../public/Frame 1000003270.png";
-import offlineImage from "../public/Frame 1000003277.png";
-import reportImage from "../public/Frame 15.png";
-import splashScreen from "../public/splash.png";
-import tasksScreen from "../public/Task.png";
-import brandArt from "../public/oppra-splash-blue-1080x1920-2 (1) 1.png";
+import planImage from "../public/feature-plan.webp";
+import offlineImage from "../public/feature-offline.webp";
+import reportImage from "../public/feature-report.webp";
+import splashScreen from "../public/splash-preview.webp";
+import tasksScreen from "../public/task-preview.webp";
+import brandArt from "../public/oppra-brand.webp";
 import { Brand } from "./_components/brand";
 import { Icon } from "./_components/icon";
 import { WaitlistForm } from "./_components/waitlist-form";
@@ -105,7 +105,7 @@ export default function Home() {
               <div className="orbit orbit-one" /><div className="orbit orbit-two" />
               <span className="visual-spark spark-one" aria-hidden="true">✳</span>
               <div className="phone phone-back">
-                <Image src={splashScreen} alt="Oppra welcome screen: Your team. One loop." sizes="240px" placeholder="blur" preload />
+                <Image src={splashScreen} alt="Oppra welcome screen: Your team. One loop." sizes="232px" placeholder="blur" />
               </div>
               <div className="phone phone-front">
                 <Image src={tasksScreen} alt="Oppra tasks screen with task statuses, teammates, and a task board" sizes="(max-width: 600px) 205px, 252px" placeholder="blur" preload />
@@ -136,7 +136,7 @@ export default function Home() {
             <div className="feature-grid">
               {features.map((feature) => (
                 <article className="feature-card" key={feature.number}>
-                  <div className="feature-art"><Image src={feature.image} alt={feature.alt} sizes="(max-width: 700px) 400px, 360px" placeholder="blur" /><span className="feature-number">{feature.number}</span></div>
+                  <div className="feature-art"><Image src={feature.image} alt={feature.alt} sizes="(max-width: 650px) calc(100vw - 58px), (max-width: 980px) calc(50vw - 40px), 360px" placeholder="blur" /><span className="feature-number">{feature.number}</span></div>
                   <div className="feature-copy"><span className="feature-label"><Icon name={feature.icon} />{feature.label}</span><h3>{feature.title}</h3><p>{feature.description}</p></div>
                 </article>
               ))}

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import brandMark from "../../public/oppra-splash-blue-1080x1920-2 (1) 1.png";
+import brandMark from "../../public/oppra-brand.webp";
 
 export function Brand() {
   return (
