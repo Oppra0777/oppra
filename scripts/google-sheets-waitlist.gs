@@ -30,11 +30,9 @@ function doPost(event) {
 
     const limits = { fullName: 100, email: 254, phone: 30, industry: 100, useCase: 1000 };
     const industries = [
-      "Agriculture", "Construction", "Education", "Energy and Utilities",
-      "Financial Services", "Government and Public Sector", "Healthcare",
-      "Hospitality", "Logistics and Transportation", "Manufacturing",
-      "Nonprofit and NGO", "Professional Services", "Real Estate",
-      "Retail and E-commerce", "Technology", "Telecommunications", "Other",
+      "Solar & field install", "Logistics & delivery", "Cleaning & facilities",
+      "AC & appliance repair", "Marketing & creative", "Generator servicing",
+      "Fumigation & pest control", "Security & guards", "Other",
     ];
     for (const field of Object.keys(limits)) {
       if (typeof data[field] !== "string" || data[field].length > limits[field]) {

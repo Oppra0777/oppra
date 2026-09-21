@@ -6,7 +6,7 @@ import { POST } from "../app/api/waitlist/route";
 import { validateWaitlist } from "../app/_lib/waitlist";
 import { saveWaitlistEntry } from "../app/_lib/waitlist-service";
 
-const valid = { fullName: "Ada Okafor", email: "ada@example.com", phone: "", industry: "Construction", useCase: "" };
+const valid = { fullName: "Ada Okafor", email: "ada@example.com", phone: "", industry: "Logistics & delivery", useCase: "" };
 const originalFetch = globalThis.fetch;
 const originalUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
 const originalSecret = process.env.GOOGLE_SHEETS_WEBHOOK_SECRET;
@@ -32,7 +32,7 @@ function request(body: unknown, headers: Record<string, string> = {}) {
 }
 
 test("normalizes name and email while accepting omitted optional fields", () => {
-  const result = validateWaitlist({ fullName: "  Ada Okafor ", email: " ADA@EXAMPLE.COM ", industry: " Construction " });
+  const result = validateWaitlist({ fullName: "  Ada Okafor ", email: " ADA@EXAMPLE.COM ", industry: " Logistics & delivery " });
   assert.equal(result.success, true);
   if (result.success) assert.deepEqual(result.data, valid);
 });
@@ -191,7 +191,7 @@ test("Apps Script creates headers, saves a signup, and avoids duplicate rows", (
   assert.equal(script.submit(details).success, true);
   assert.equal(script.rows.length, 2);
   assert.equal(script.rows[1][2], "ada@example.com");
-  assert.equal(script.rows[1][4], "Construction");
+  assert.equal(script.rows[1][4], "Logistics & delivery");
   assert.equal(script.submit({ ...details, email: "ADA@EXAMPLE.COM" }).success, true);
   assert.equal(script.rows.length, 2);
   assert.equal(script.released(), 2);
